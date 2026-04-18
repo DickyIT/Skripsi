@@ -23,14 +23,9 @@ function Tahunan() {
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
 
-  // Tambahkan fetchYearData ke dalam array dependensi useEffect
+  // ✅ FIX: useEffect dirapihin + conflict dihapus
   useEffect(() => {
-<<<<<<< HEAD
     if (!userId) return;
-=======
-    fetchYearData(year);
-  }, [year, fetchYearData]);  // fetchYearData ditambahkan ke sini untuk menghindari peringatan
->>>>>>> 9b7024fcd87a7e57c8e27f627f3b1986ffa85128
 
     axios
       .get(`http://localhost:8081/rekap/tahunan/${userId}/${year}`)
@@ -68,8 +63,6 @@ function Tahunan() {
 
         setTotalIncome(incomeYear);
         setTotalExpense(expenseYear);
-
-        // 🔥 INI LOGIC BARU TAHUNAN
         setCurrentBalance(incomeYear - expenseYear);
       })
       .catch((err) => console.error("Error fetch tahunan:", err));
@@ -118,11 +111,11 @@ function Tahunan() {
       </div>
 
       <div className="container-tahun">
-      <div className="header-tahun">
-        <button onClick={goToPrevYear}>◀</button>
-        {year}
-        <button onClick={goToNextYear}>▶</button>
-      </div>
+        <div className="header-tahun">
+          <button onClick={goToPrevYear}>◀</button>
+          {year}
+          <button onClick={goToNextYear}>▶</button>
+        </div>
 
         <div className="grid-tahun">
           {monthlyData.map((monthData, index) => {
