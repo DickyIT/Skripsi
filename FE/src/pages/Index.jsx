@@ -35,7 +35,7 @@ function Index() {
         <div className="card-image" style={{ textAlign: "center" }}>
           <img
             src="/assets/images/card Homepage.png"
-            alt="Homepage Card Image"
+            alt="Homepage Card"
             style={{ maxWidth: "100%", height: "auto" }}
           />
         </div>
