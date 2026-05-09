@@ -1,166 +1,167 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-function Bulanan() {
-  const userId = Number(localStorage.getItem("userId"));
-  const { month, year } = useParams();
+function Daftar() {
+  const navigate = useNavigate();
 
-  const [currentDate, setCurrentDate] = useState(
-    month && year
-      ? new Date(Number(year), Number(month) - 1)
-      : new Date()
-  );
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [incomeData, setIncomeData] = useState([]);
-  const [expenseData, setExpenseData] = useState([]);
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [totalExpense, setTotalExpense] = useState(0);
-  const [budget, setBudget] = useState(0);
-  const [currentBalance, setCurrentBalance] = useState(0);
+  const [values, setValues] = useState({
+    fullName: '',
+    username: '',
+    email: '',
+    password: '',
+  });
 
-  useEffect(() => {
-    if (month && year) {
-      setCurrentDate(new Date(Number(year), Number(month) - 1));
-    }
-  }, [month, year]);
-
-  const formatDate = (date) => {
-    return new Date(date).toLocaleDateString("id-ID");
-  };
-
-  const formatMonthYear = () => {
-    return currentDate.toLocaleString("id-ID", {
-      month: "long",
-      year: "numeric",
+  // ===============================
+  // handle input
+  // ===============================
+  const handleChange = (e) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
     });
   };
 
-  useEffect(() => {
-    if (!userId) return;
-
-    const monthNumber = currentDate.getMonth() + 1;
-    const yearNumber = currentDate.getFullYear();
-
-    axios
-      .get(
-        `http://localhost:8081/rekap/bulanan/${userId}/${monthNumber}/${yearNumber}`
-      )
-      .then((response) => {
-        const data = response.data.data || [];
-
-        const income = data.filter((t) => t.type === "income");
-        const expense = data.filter((t) => t.type === "expense");
-
-        setIncomeData(income);
-        setExpenseData(expense);
-        setTotalIncome(response.data.income || 0);
-        setTotalExpense(response.data.expense || 0);
-      })
-      .catch((err) => console.error("Error fetch bulanan:", err));
-
-    axios
-      .get(`http://localhost:8081/budget/${userId}/${monthNumber}/${yearNumber}`)
-      .then((res) => {
-        setBudget(res.data.nominal || 0);
-      })
-      .catch((err) => console.error("Error fetch budget:", err));
-  }, [currentDate, userId]);
-
-  useEffect(() => {
-    setCurrentBalance(budget - totalExpense);
-  }, [budget, totalExpense]);
-
-  const goToPrevMonth = () => {
-    const prev = new Date(currentDate);
-    prev.setMonth(prev.getMonth() - 1);
-    setCurrentDate(prev);
+  // ===============================
+  // toggle password
+  // ===============================
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
-  const goToNextMonth = () => {
-    const next = new Date(currentDate);
-    next.setMonth(next.getMonth() + 1);
-    setCurrentDate(next);
+  // ===============================
+  // submit daftar
+  // ===============================
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/daftar`,
+        values
+      );
+
+      console.log(res.data);
+
+      alert('Pendaftaran berhasil! Silakan masuk.');
+
+      // reset form
+      setValues({
+        fullName: '',
+        username: '',
+        email: '',
+        password: '',
+      });
+
+      navigate('/masuk');
+
+    } catch (err) {
+      console.error(err);
+
+      if (err.response) {
+        alert(err.response.data.message || 'Server error');
+      } else {
+        alert('Backend belum jalan / koneksi gagal');
+      }
+    }
   };
 
   return (
-    <section id="rekap2">
-      <div className="container-rekap">
-        <div className="saldo-container-rekap">
-          <p>Sisa Budget</p>
-          <p>Rp. {currentBalance.toLocaleString("id-ID")}</p>
-        </div>
+    <section id="register">
+      <div className="container-daftar">
+        <div className="form-section-daftar">
+          <h2>Daftar Sekarang</h2>
+          <p>Halo! Selamat datang di website Control Money 👋</p>
 
-        <div className="transaction-summary-rekap">
-          <div>
-            <p>Pengeluaran</p>
-            <p style={{ color: "red" }}>
-              Rp. {totalExpense.toLocaleString("id-ID")}
+          <form onSubmit={handleSubmit}>
+
+            <div className="input-row-daftar">
+              <div className="input-group-daftar">
+                <label>Nama Lengkap</label>
+                <input
+                  type="text"
+                  name="fullName"
+                  placeholder="Masukkan Nama Lengkap"
+                  value={values.fullName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="input-group-daftar">
+                <label>Nama Pengguna</label>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Buat Nama Pengguna"
+                  value={values.username}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="input-row-daftar">
+              <div className="input-group-daftar">
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Masukkan Email"
+                  value={values.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="input-group-daftar">
+                <label>Kata Sandi</label>
+
+                <div className="password-container-daftar">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    placeholder="Buat Kata Sandi"
+                    value={values.password}
+                    onChange={handleChange}
+                    required
+                  />
+
+                  <i
+                    className={`fa-solid fa-eye${showPassword ? '' : '-slash'} toggle-password-daftar`}
+                    onClick={togglePassword}
+                    style={{ cursor: 'pointer' }}
+                  ></i>
+                </div>
+
+                <p className="password-hint-daftar">
+                  Kata sandi minimal 6 karakter
+                </p>
+              </div>
+            </div>
+
+            <button type="submit" className="btn-daftar">
+              Daftar
+            </button>
+
+            <p className="login-link-daftar">
+              Sudah memiliki akun?{' '}
+              <a href="/masuk" className="link-daftar">
+                Masuk
+              </a>
             </p>
-          </div>
 
-          <div>
-            <p>Pemasukan</p>
-            <p style={{ color: "green" }}>
-              Rp. {totalIncome.toLocaleString("id-ID")}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="container-bulan">
-        <div className="header-bulan">
-          <button onClick={goToPrevMonth}>◀</button>
-          {formatMonthYear()}
-          <button onClick={goToNextMonth}>▶</button>
+          </form>
         </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Tanggal</th>
-              <th>Nama Dompet</th>
-              <th>Nominal</th>
-              <th>Catatan</th>
-            </tr>
-          </thead>
-          <tbody>
-            {incomeData.length === 0 && expenseData.length === 0 ? (
-              <tr>
-                <td colSpan="4" style={{ textAlign: "center" }}>
-                  Tidak ada transaksi bulan ini
-                </td>
-              </tr>
-            ) : (
-              <>
-                {incomeData.map((item) => (
-                  <tr key={`income-${item.id}`}>
-                    <td>{formatDate(item.date)}</td>
-                    <td>{item.wallet_name}</td>
-                    <td style={{ color: "green" }}>
-                      + {Number(item.amount).toLocaleString("id-ID")}
-                    </td>
-                    <td>{item.note}</td>
-                  </tr>
-                ))}
-
-                {expenseData.map((item) => (
-                  <tr key={`expense-${item.id}`}>
-                    <td>{formatDate(item.date)}</td>
-                    <td>{item.wallet_name}</td>
-                    <td style={{ color: "red" }}>
-                      - {Number(item.amount).toLocaleString("id-ID")}
-                    </td>
-                    <td>{item.note}</td>
-                  </tr>
-                ))}
-              </>
-            )}
-          </tbody>
-        </table>
+        <div className="image-section-daftar">
+          <img src="/assets/images/Logo fix.png" alt="Logo" />
+        </div>
       </div>
     </section>
   );
 }
 
-export default Bulanan;
+export default Daftar;

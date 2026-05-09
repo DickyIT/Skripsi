@@ -28,7 +28,9 @@ function Tahunan() {
     if (!userId) return;
 
     axios
-      .get(`http://localhost:8081/rekap/tahunan/${userId}/${year}`)
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/rekap/tahunan/${userId}/${year}`
+      )
       .then((res) => {
         const transactions = res.data.data || [];
 

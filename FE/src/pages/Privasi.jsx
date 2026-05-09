@@ -21,7 +21,7 @@ function Privasi() {
 
     try {
       await axios.put(
-        `http://localhost:8081/change-password/${user.id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/change-password/${user.id}`,
         {
           oldPassword,
           newPassword,
@@ -52,7 +52,10 @@ function Privasi() {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:8081/users/${user.id}`);
+      await axios.delete(
+        `${process.env.REACT_APP_BACKEND_URL}/users/${user.id}`
+      );
+
       alert("Akun berhasil dihapus");
 
       setUser(null);

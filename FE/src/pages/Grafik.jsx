@@ -67,11 +67,11 @@ function Grafik() {
 
     try {
       const rekapRes = await axios.get(
-        `http://localhost:8081/rekap/bulanan/${userId}/${m}/${y}`
+        `${process.env.REACT_APP_API_URL}/rekap/bulanan/${userId}/${m}/${y}`
       );
 
       const budgetRes = await axios.get(
-        `http://localhost:8081/budget/${userId}/${m}/${y}`
+        `${process.env.REACT_APP_API_URL}/budget/${userId}/${m}/${y}`
       );
 
       const income = rekapRes.data.income || 0;
@@ -92,7 +92,7 @@ function Grafik() {
   const fetchTransactions = async () => {
     try {
       const trxRes = await axios.get(
-        `http://localhost:8081/transactions/${userId}`
+        `${process.env.REACT_APP_API_URL}/transactions/${userId}`
       );
       setTransactions(trxRes.data || []);
     } catch (err) {
@@ -128,7 +128,7 @@ function Grafik() {
     }
 
     try {
-      await axios.post("http://localhost:8081/budget", {
+      await axios.post(`${process.env.REACT_APP_API_URL}/budget`, {
         user_id: userId,
         month: m,
         year: y,
@@ -204,22 +204,26 @@ function Grafik() {
 
       <div className="kelola-summary">
         <div className="month-switch">
-        <button onClick={prevMonth}>◀</button>
-<span>
-  {currentMonth.toLocaleString("id-ID", {
-    month: "long",
-    year: "numeric",
-  })}
-</span>
-<button onClick={nextMonth}>▶</button>
+          <button onClick={prevMonth}>◀</button>
+
+          <span>
+            {currentMonth.toLocaleString("id-ID", {
+              month: "long",
+              year: "numeric",
+            })}
+          </span>
+
+          <button onClick={nextMonth}>▶</button>
         </div>
 
-        <h2 className="nominal-budget"
-          style={{ color: summary.remaining < 0 ? "red" : "#16a34a" }}>
+        <h2
+          className="nominal-budget"
+          style={{ color: summary.remaining < 0 ? "red" : "#16a34a" }}
+        >
           {rupiah(summary.remaining)}
         </h2>
 
-                {summary.remaining < 0 && (
+        {summary.remaining < 0 && (
           <p style={{ color: "red", fontWeight: "bold", marginTop: "5px" }}>
             ⚠ Melebihi budget!
           </p>
@@ -293,7 +297,7 @@ function Grafik() {
         </div>
       )}
 
-      {/* 🔥 Popup Ubah Budget (PAKAI CSS ASLI KAMU) */}
+      {/* Popup Ubah Budget */}
       {showBudgetForm && (
         <div className="budget-overlay">
           <div className="budget-modal">

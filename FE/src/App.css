@@ -302,3 +302,199 @@ a {
   background: rgba(255, 255, 255, 0.35);
   transform: scale(1.05);
 }
+
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  width: 100%;
+  padding: 0 16px;
+}
+
+canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* ================= NAVBAR RESPONSIVE ================= */
+
+#navbar-toggler {
+  display: none;
+}
+
+.navbar-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+
+  #navbar-toggler {
+    display: block !important;
+  }
+
+  .navbar-menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .navbar-menu.show {
+    display: flex;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start !important;
+    width: 100%;
+  }
+
+  .navbar li {
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .auth-buttons {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .auth-buttons button {
+    width: 100%;
+  }
+}
+
+
+/* ================= GLOBAL RESPONSIVE ================= */
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.container,
+.containersaldo,
+.content-wrapper-riwayat,
+.summary-container,
+.list-container {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* TABLET */
+@media screen and (max-width: 992px) {
+
+  .tips,
+  .tips2,
+  .summary-container {
+    flex-direction: column !important;
+    align-items: center;
+  }
+
+  .column {
+    width: 100%;
+  }
+
+  .item-dompet {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+/* HP */
+@media screen and (max-width: 768px) {
+
+  h1 {
+    font-size: 24px !important;
+  }
+
+  h2 {
+    font-size: 20px !important;
+  }
+
+  p {
+    font-size: 14px !important;
+  }
+
+  .hero {
+    padding: 15px !important;
+  }
+
+  .start-btn {
+    width: 100%;
+  }
+
+  .summary-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .transaction-card {
+    padding: 12px;
+  }
+
+  .transaction-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .navbar {
+    width: 100%;
+  }
+
+  .auth-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .auth-buttons button {
+    width: 100%;
+  }
+}
+
+/* HP KECIL */
+@media screen and (max-width: 480px) {
+
+  h1 {
+    font-size: 20px !important;
+  }
+
+  .saldo p {
+    font-size: 22px !important;
+  }
+
+  .transaction-card {
+    font-size: 14px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}

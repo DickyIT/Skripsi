@@ -1,11 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Index.css';
 
 function Index() {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('/grafik'); 
+    navigate('/grafik');
   };
 
   return (
@@ -17,6 +18,7 @@ function Index() {
             Sederhanakan pencatatan dan pengelolaan keuangan pribadi anda. Buat keputusan cerdas untuk masa depan yang
             lebih cerah!
           </p>
+
           <button
             className="start-btn"
             style={{
@@ -27,11 +29,12 @@ function Index() {
               borderRadius: "5px",
               cursor: "pointer",
             }}
-            onClick={handleButtonClick} // Panggil fungsi navigasi
+            onClick={handleButtonClick}
           >
             Mulai Kelola Keuangan
           </button>
         </div>
+
         <div className="card-image" style={{ textAlign: "center" }}>
           <img
             src="/assets/images/card Homepage.png"
@@ -45,8 +48,17 @@ function Index() {
         <header className="title" style={{ textAlign: "center", marginBottom: "20px" }}>
           <h1>Tips Keuangan Pintar</h1>
         </header>
-        <section className="tips" style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
-          <div className="column" style={{ flex: 1 }}>
+
+        <section
+          className="tips"
+          style={{
+            display: "flex",
+            gap: "20px",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          <div className="column" style={{ flex: 1, minWidth: "280px" }}>
             <article className="tip color-1">
               <h3>Batasi Pengeluaran Hiburan</h3>
               <p>
@@ -54,6 +66,7 @@ function Index() {
                 bisa lebih mudah menabung.
               </p>
             </article>
+
             <article className="tip color-2">
               <h3>Manfaatkan Diskon & Promo</h3>
               <p>
@@ -62,7 +75,8 @@ function Index() {
               </p>
             </article>
           </div>
-          <div className="column" style={{ flex: 1 }}>
+
+          <div className="column" style={{ flex: 1, minWidth: "280px" }}>
             <article className="tip color-3">
               <h3>Catat Pengeluaran Harian</h3>
               <p>
@@ -70,6 +84,7 @@ function Index() {
                 penyimpanan.
               </p>
             </article>
+
             <article className="tip color-4">
               <h3>Tabung pada Awal Bulan</h3>
               <p>
@@ -77,33 +92,54 @@ function Index() {
               </p>
             </article>
           </div>
+
           <aside className="imagetip1-container" style={{ textAlign: "center" }}>
             <img
               src="/assets/images/tips1.png"
               alt="tips1"
-              style={{ maxWidth: "300px", height: "auto", borderRadius: "8px" }}
+              style={{
+                width: "100%",
+                maxWidth: "300px",
+                height: "auto",
+                borderRadius: "8px",
+              }}
             />
           </aside>
         </section>
       </section>
 
       <section className="container" style={{ marginTop: "40px" }}>
-        <section className="tips2" style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
+        <section
+          className="tips2"
+          style={{
+            display: "flex",
+            gap: "20px",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
           <aside className="imagetip2-container" style={{ textAlign: "center" }}>
             <img
               src="/assets/images/tips2.png"
               alt="tips2"
-              style={{ maxWidth: "300px", height: "auto", borderRadius: "8px" }}
+              style={{
+                width: "100%",
+                maxWidth: "300px",
+                height: "auto",
+                borderRadius: "8px",
+              }}
             />
           </aside>
-          <div className="column" style={{ flex: 1 }}>
-            <article className="tip color-1" >
+
+          <div className="column" style={{ flex: 1, minWidth: "280px" }}>
+            <article className="tip color-1">
               <h3>Buat Daftar Belanja</h3>
               <p>
                 Sebelum berbelanja, buat daftar kebutuhan agar tidak tergoda membeli barang di luar rencana. Ini bisa
                 membantu menghemat pengeluaran.
               </p>
             </article>
+
             <article className="tip color-2">
               <h3>Sisihkan Dana Darurat</h3>
               <p>
@@ -112,7 +148,8 @@ function Index() {
               </p>
             </article>
           </div>
-          <div className="column" style={{ flex: 1 }}>
+
+          <div className="column" style={{ flex: 1, minWidth: "280px" }}>
             <article className="tip color-3">
               <h3>Evaluasi Pengeluaran</h3>
               <p>
@@ -120,6 +157,7 @@ function Index() {
                 menghemat lebih banyak.
               </p>
             </article>
+
             <article className="tip color-4">
               <h3>Gunakan Aplikasi Keuangan</h3>
               <p>
@@ -131,7 +169,7 @@ function Index() {
         </section>
       </section>
     </section>
-  )
+  );
 }
 
-export default Index
+export default Index;
